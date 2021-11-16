@@ -56,7 +56,8 @@ Pod::Spec.new do |spec|
 
   #  When using multiple platforms
   spec.ios.deployment_target = "13.0"
-
+  
+  spec.swift_version = "5.0"
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -75,7 +76,8 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "ANFVision/Classes/*.{swift}"
+  spec.source           = { :git => 'https://github.com/niroshanf/ANFVision.git', :tag => spec.version.to_s }
+  spec.ios.source_files  = "ANFVision/Classes/*.{swift}"
 
   # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
