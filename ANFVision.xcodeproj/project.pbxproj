@@ -10,6 +10,7 @@
 		084B8351274396E20036CE8B /* ANFVision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084B8348274396E20036CE8B /* ANFVision.framework */; };
 		084B8356274396E20036CE8B /* ANFVisionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B8355274396E20036CE8B /* ANFVisionTests.swift */; };
 		084B8357274396E20036CE8B /* ANFVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 084B834B274396E20036CE8B /* ANFVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		084B83822743A14D0036CE8B /* ANFVisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B83812743A14D0036CE8B /* ANFVisionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,7 @@
 		084B834B274396E20036CE8B /* ANFVision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ANFVision.h; sourceTree = "<group>"; };
 		084B8350274396E20036CE8B /* ANFVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANFVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		084B8355274396E20036CE8B /* ANFVisionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANFVisionTests.swift; sourceTree = "<group>"; };
+		084B83812743A14D0036CE8B /* ANFVisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANFVisionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 		084B834A274396E20036CE8B /* ANFVision */ = {
 			isa = PBXGroup;
 			children = (
+				084B83802743A13A0036CE8B /* Classes */,
 				084B834B274396E20036CE8B /* ANFVision.h */,
 			);
 			path = ANFVision;
@@ -80,6 +83,14 @@
 				084B8355274396E20036CE8B /* ANFVisionTests.swift */,
 			);
 			path = ANFVisionTests;
+			sourceTree = "<group>";
+		};
+		084B83802743A13A0036CE8B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				084B83812743A14D0036CE8B /* ANFVisionManager.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +155,7 @@
 				TargetAttributes = {
 					084B8347274396E20036CE8B = {
 						CreatedOnToolsVersion = 13.1;
+						LastSwiftMigration = 1310;
 					};
 					084B834F274396E20036CE8B = {
 						CreatedOnToolsVersion = 13.1;
@@ -191,6 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084B83822743A14D0036CE8B /* ANFVisionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +351,7 @@
 		084B835B274396E20036CE8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -360,6 +374,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -368,6 +383,7 @@
 		084B835C274396E20036CE8B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -398,6 +414,7 @@
 		084B835E274396E20036CE8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7QMQD9K2P4;
@@ -419,6 +436,7 @@
 		084B835F274396E20036CE8B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7QMQD9K2P4;
