@@ -36,14 +36,21 @@ public class ANFVisionManager {
         let request = VNRecognizeTextRequest { req, error in
             
             guard error == nil else {
-                onComplete(.failure(error!))
+                
+                DispatchQueue.main.async {
+                    onComplete(.failure(error!))
+                }
                 return
             }
             
             guard let observationArr = req.results as? [VNRecognizedTextObservation], error == nil else {
-                onComplete(.failure(
-                    NSError(domain: "Could not create the CGImage", code: 101, userInfo: nil)
-                ))
+                
+                DispatchQueue.main.async {
+                    
+                    onComplete(.failure(
+                        NSError(domain: "Could not create the CGImage", code: 101, userInfo: nil)
+                    ))
+                }
                 return
             }
             
@@ -110,23 +117,38 @@ public class ANFVisionManager {
                             if let faces = data["faceAnnotations"] as? [[String: Any]] {
                                 
                                 if faces.count > 1 {
-                                    onComplete(.success(.moreThanOneFaceDetected))
+                                    
+                                    DispatchQueue.main.async {
+                                        onComplete(.success(.moreThanOneFaceDetected))
+                                    }
                                 }
                                 else {
-                                    onComplete(.success(.ok(image)))
+                                    
+                                    DispatchQueue.main.async {
+                                        onComplete(.success(.ok(image)))
+                                    }
                                 }
                             }
                             else {
-                                onComplete(.success(.noFaceDetected))
+                                
+                                DispatchQueue.main.async {
+                                    onComplete(.success(.noFaceDetected))
+                                }
                             }
                         }
                         else {
-                            onComplete(.success(.noFaceDetected))
+                            
+                            DispatchQueue.main.async {
+                                onComplete(.success(.noFaceDetected))
+                            }
                         }
                     }
                     
                 case .failure(let error):
-                    onComplete(.failure(error))
+                
+                    DispatchQueue.main.async {
+                        onComplete(.failure(error))
+                    }
             }
             
         }
