@@ -11,6 +11,7 @@
 		084B8356274396E20036CE8B /* ANFVisionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B8355274396E20036CE8B /* ANFVisionTests.swift */; };
 		084B8357274396E20036CE8B /* ANFVision.h in Headers */ = {isa = PBXBuildFile; fileRef = 084B834B274396E20036CE8B /* ANFVision.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		084B83822743A14D0036CE8B /* ANFVisionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084B83812743A14D0036CE8B /* ANFVisionManager.swift */; };
+		08A8C1B92744DE7500793502 /* ANFNetworkManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A8C1B82744DE7500793502 /* ANFNetworkManger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		084B8350274396E20036CE8B /* ANFVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ANFVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		084B8355274396E20036CE8B /* ANFVisionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANFVisionTests.swift; sourceTree = "<group>"; };
 		084B83812743A14D0036CE8B /* ANFVisionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ANFVisionManager.swift; sourceTree = "<group>"; };
+		08A8C1B82744DE7500793502 /* ANFNetworkManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ANFNetworkManger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				084B83812743A14D0036CE8B /* ANFVisionManager.swift */,
+				08A8C1B82744DE7500793502 /* ANFNetworkManger.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08A8C1B92744DE7500793502 /* ANFNetworkManger.swift in Sources */,
 				084B83822743A14D0036CE8B /* ANFVisionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
