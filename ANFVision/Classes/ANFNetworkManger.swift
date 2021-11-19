@@ -7,23 +7,23 @@
 
 import Foundation
 
-public enum NetworkOperationError: Error {
-    case cancelled
+public enum NetworkError: Error {
     case notConnectedToInternet
     case invalidUrl
     case invalidResponse
     case serverError
-    case other(Error?)
+    case unknownError
+    case other(Error)
 }
 
-public typealias NetworkOperationCompletionHandler = (Result<[String: Any], NetworkOperationError>) -> Void
+public typealias NetworkTaskCompletionHandler = (Result<[String: Any], NetworkError>) -> Void
 
 public class ANFNetworkManger {
     
     private var session = URLSession.shared
     private var task: URLSessionDataTask?
     
-    func fetch(urlString: String, body: Data?, completionHandler: @escaping NetworkOperationCompletionHandler) {
+    func fetch(urlString: String, body: Data?, completionHandler: @escaping NetworkTaskCompletionHandler) {
         
         guard let url = URL(string: urlString) else {
             completionHandler(.failure(.invalidUrl))
@@ -92,7 +92,7 @@ public class ANFNetworkManger {
             
             // for handling annonymous errors
             DispatchQueue.main.async {
-                completionHandler(.failure(.other(nil)))
+                completionHandler(.failure(.unknownError))
             }
         })
         

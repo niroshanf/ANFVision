@@ -26,14 +26,14 @@ public class ANFVisionManager {
         
         guard let cgImage = image.cgImage else {
             onComplete(.failure(
-                NSError(domain: "Could not create the CGImage", code: 100, userInfo: nil)
+                NSError(domain: "", code: 100, userInfo: [NSLocalizedDescriptionKey: "Could not create the CGImage"])
             ))
             return
         }
         
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         
-        let request = VNRecognizeTextRequest { req, error in
+        let request = VNRecognizeTextRequest { res, error in
             
             guard error == nil else {
                 
@@ -43,12 +43,12 @@ public class ANFVisionManager {
                 return
             }
             
-            guard let observationArr = req.results as? [VNRecognizedTextObservation], error == nil else {
+            guard let observationArr = res.results as? [VNRecognizedTextObservation], error == nil else {
                 
                 DispatchQueue.main.async {
                     
                     onComplete(.failure(
-                        NSError(domain: "Could not create the CGImage", code: 101, userInfo: nil)
+                        NSError(domain: "", code: 101, userInfo: [NSLocalizedDescriptionKey: "Invalid response received from server"])
                     ))
                 }
                 return
@@ -86,7 +86,7 @@ public class ANFVisionManager {
         
         guard let imageData = image.jpegData(compressionQuality: 1) else {
             onComplete(.failure(
-                NSError(domain: "Invalid image", code: 102, userInfo: nil)
+                NSError(domain: "", code: 102, userInfo: [NSLocalizedDescriptionKey: "Invalid image"])
             ))
             return
         }
@@ -94,7 +94,7 @@ public class ANFVisionManager {
         let base64Str = imageData.base64EncodedString(options: .endLineWithCarriageReturn)
         if base64Str.count == 0 {
             onComplete(.failure(
-                NSError(domain: "Invalid image", code: 102, userInfo: nil)
+                NSError(domain: "", code: 102, userInfo: [NSLocalizedDescriptionKey: "Invalid image"])
             ))
             return
         }
@@ -144,14 +144,33 @@ public class ANFVisionManager {
                         }
                     }
                     
-                case .failure(let error):
+            case .failure(let netError):
                 
-                    DispatchQueue.main.async {
-                        onComplete(.failure(error))
-                    }
+                let finalError = getErrorForNetworkError(networkError: netError)
+
+                DispatchQueue.main.async {
+                    onComplete(.failure(finalError))
+                }
             }
             
         }
-       
+    }
+    
+    private static func getErrorForNetworkError(networkError: NetworkError) -> Error {
+        
+        switch networkError {
+            case .notConnectedToInternet:
+                return NSError(domain: "", code: 103, userInfo: [NSLocalizedDescriptionKey: "Not connected to internet"])
+            case .invalidUrl:
+                return NSError(domain: "", code: 104, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])
+            case .invalidResponse:
+                return NSError(domain: "", code: 105, userInfo: [NSLocalizedDescriptionKey: "Invalid Response"])
+            case .serverError:
+                return NSError(domain: "", code: 106, userInfo: [NSLocalizedDescriptionKey: "Server Error"])
+            case .unknownError:
+                return NSError(domain: "", code: 107, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
+            case .other(let e):
+                return NSError(domain: "", code: 108, userInfo: [NSLocalizedDescriptionKey: e.localizedDescription])
+        }
     }
 }
