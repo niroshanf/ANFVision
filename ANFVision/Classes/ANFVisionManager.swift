@@ -22,7 +22,7 @@ public class ANFVisionManager {
     
     private static let GOOGLE_VISION_API = "https://vision.googleapis.com/v1/images:annotate"
     
-    public static func scan(image: UIImage, onComplete: @escaping TextScanCompletionHandler) {
+    public static func scanText(image: UIImage, confidence: Float, onComplete: @escaping TextScanCompletionHandler) {
         
         guard let cgImage = image.cgImage else {
             onComplete(.failure(
@@ -55,7 +55,7 @@ public class ANFVisionManager {
                 
                 for i in 0..<arr.count {
                     
-                    if arr[i].confidence >= 0.5 {
+                    if arr[i].confidence >= confidence {
                         extractedText.append(arr[i].string)
                         break
                     }
