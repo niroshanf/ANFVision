@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Vision
+import AVFoundation
 
 public enum finalResponse {
     case noFaceDetected
@@ -15,12 +16,58 @@ public enum finalResponse {
     case ok(UIImage)
 }
 
+
 public typealias TextScanCompletionHandler = (Result<[String], Error>) -> Void
 public typealias FaceScanCompletionHandler = (Result<finalResponse, Error>) -> Void
 
 public class ANFVisionManager {
     
     private static let GOOGLE_VISION_API = "https://vision.googleapis.com/v1/images:annotate"
+    
+    private static var imagePickerController = UIImagePickerController()
+    
+    public static func takePicture(source: UIImagePickerController.SourceType, delegate: (UIViewController & UIImagePickerControllerDelegate & UINavigationControllerDelegate)) {
+        
+        imagePickerController.delegate = delegate
+        imagePickerController.modalPresentationStyle = .fullScreen
+        
+        if source == .camera {
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                self.showMessage(message: "Device not support. You need a device with a camera", viewController: delegate)
+                return
+            }
+            
+            self.imagePickerController.sourceType = .camera
+        }
+        else {
+            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+                self.showMessage(message: "Device not support. You need a device that support photo library", viewController: delegate)
+                return
+            }
+            
+            self.imagePickerController.sourceType = .photoLibrary
+        }
+        
+        //Check for the permission to open the camera
+        let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        
+        if authStatus == AVAuthorizationStatus.denied {
+            
+            self.showMessage(message: "Please allow camera access from settings", viewController: delegate)
+            
+        } else if authStatus == AVAuthorizationStatus.notDetermined {
+
+            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted) in
+                if granted {
+                    DispatchQueue.main.async {
+                        delegate.present(self.imagePickerController, animated: true, completion: nil)
+                    }
+                }
+            })
+        } else {
+            delegate.present(self.imagePickerController, animated: true, completion: nil)
+        }
+    }
     
     public static func scanText(image: UIImage, confidence: Float, onComplete: @escaping TextScanCompletionHandler) {
         
@@ -154,6 +201,20 @@ public class ANFVisionManager {
             }
             
         }
+    }
+    
+    private static func showMessage(message: String, viewController: UIViewController) {
+        
+        let alertVC = UIAlertController(title: "Error",
+                                       message: message,
+                                        preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel,
+                                         handler: nil)
+        alertVC.addAction(cancelAction)
+        
+        viewController.present(alertVC, animated: true, completion: nil)
     }
     
     private static func getErrorForNetworkError(networkError: NetworkError) -> Error {
