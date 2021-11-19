@@ -18,7 +18,7 @@ If any error it will call the failure Result and you can handdle the error from 
 
 Parameters::
 
-`image`: UIImage that has text you need to scan.
+`image`: UIImage that has text you need to scan.  
 `confidence`: confidence level you desire. Ranging from [0.0, 1.0] where 1.0 is most confident 
 
 ```objective-c
@@ -45,7 +45,7 @@ It uses Google's Cloude Vision API so inorder it to work you should have a valid
 
 Parameters::
 
-`image`: UIImage that needs to detect the faces
+`image`: UIImage that needs to detect the faces  
 `apiKey`: Google Cloude Vision API key (https://cloud.google.com/)
 
 ```objective-c
