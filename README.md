@@ -9,6 +9,46 @@ Import the framework
 ```objective-c
 import ANFVision
 ```
+#### Open camera / photo library 
+
+You can choose or provide a photo to the framework by calling,
+
+```objective-c
+
+// open the photo library
+ANFVisionManager.takePicture(source: .photoLibrary, delegate: self)
+
+// open the camera
+ANFVisionManager.takePicture(source: .camera, delegate: self)
+
+```
+
+By setting the view controller as the delegate you need to implement the two protocols UINavigationControllerDelegate and UIImagePickerControllerDelegate
+
+Below sample implemetation will demostrate how to implement those protocols
+
+```objective-c
+
+extension UIViewController : UINavigationControllerDelegate { }
+
+extension UIViewController: UIImagePickerControllerDelegate {
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+
+        dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        dismiss(animated: true, completion: nil)
+
+        let originalImage: UIImage = info[.originalImage] as! UIImage
+
+        ............... 
+    }
+}
+
+```
 
 #### Detect text
 
