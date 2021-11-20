@@ -32,39 +32,39 @@ public class ANFVisionManager {
         imagePickerController.modalPresentationStyle = .fullScreen
         
         if source == .camera {
+            
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
                 self.showMessage(message: "Device not support. You need a device with a camera", viewController: delegate)
                 return
             }
             
             self.imagePickerController.sourceType = .camera
-        }
-        else {
-            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-                self.showMessage(message: "Device not support. You need a device that support photo library", viewController: delegate)
-                return
+            
+            //Check for the permission to open the camera
+            let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+            
+            if authStatus == AVAuthorizationStatus.denied {
+                
+                self.showMessage(message: "Please allow camera access from settings", viewController: delegate)
+                
+            } else if authStatus == AVAuthorizationStatus.notDetermined {
+
+                AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted) in
+                    if granted {
+                        DispatchQueue.main.async {
+                            delegate.present(self.imagePickerController, animated: true, completion: nil)
+                        }
+                    }
+                })
+            } else {
+                delegate.present(self.imagePickerController, animated: true, completion: nil)
             }
             
-            self.imagePickerController.sourceType = .photoLibrary
         }
-        
-        //Check for the permission to open the camera
-        let authStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
-        
-        if authStatus == AVAuthorizationStatus.denied {
+        else {
             
-            self.showMessage(message: "Please allow camera access from settings", viewController: delegate)
+            self.imagePickerController.sourceType = .photoLibrary
             
-        } else if authStatus == AVAuthorizationStatus.notDetermined {
-
-            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted) in
-                if granted {
-                    DispatchQueue.main.async {
-                        delegate.present(self.imagePickerController, animated: true, completion: nil)
-                    }
-                }
-            })
-        } else {
             delegate.present(self.imagePickerController, animated: true, completion: nil)
         }
     }
@@ -90,10 +90,9 @@ public class ANFVisionManager {
                 return
             }
             
-            guard let observationArr = res.results as? [VNRecognizedTextObservation], error == nil else {
+            guard let observationArr = res.results as? [VNRecognizedTextObservation] else {
                 
                 DispatchQueue.main.async {
-                    
                     onComplete(.failure(
                         NSError(domain: "", code: 101, userInfo: [NSLocalizedDescriptionKey: "Invalid response received from server"])
                     ))
@@ -155,49 +154,45 @@ public class ANFVisionManager {
         networkManager.fetch(urlString: url, body: jsonBodyData) { result in
 
             switch result {
+                
                 case .success(let data):
                     
                     if let response = data["responses"] as? [Any] {
-
-                        if let data = response.first as? [String: Any], !data.isEmpty {
-                            
-                            if let faces = data["faceAnnotations"] as? [[String: Any]] {
-                                
-                                if faces.count > 1 {
-                                    
-                                    DispatchQueue.main.async {
-                                        onComplete(.success(.moreThanOneFaceDetected))
-                                    }
-                                }
-                                else {
-                                    
-                                    DispatchQueue.main.async {
-                                        onComplete(.success(.ok(image)))
-                                    }
-                                }
-                            }
-                            else {
-                                
-                                DispatchQueue.main.async {
-                                    onComplete(.success(.noFaceDetected))
-                                }
-                            }
-                        }
-                        else {
-                            
+                        
+                        guard let data = response.first as? [String: Any], !data.isEmpty else {
                             DispatchQueue.main.async {
                                 onComplete(.success(.noFaceDetected))
                             }
+                            return
+                        }
+                        
+                        guard let faces = data["faceAnnotations"] as? [[String: Any]] else {
+                            DispatchQueue.main.async {
+                                onComplete(.success(.noFaceDetected))
+                            }
+                            return
+                        }
+                        
+                        guard faces.count > 1 else {
+                            DispatchQueue.main.async {
+                                onComplete(.success(.ok(image)))
+                            }
+                            return
+                        }
+
+                        //More than one face detected
+                        DispatchQueue.main.async {
+                            onComplete(.success(.moreThanOneFaceDetected))
                         }
                     }
                     
-            case .failure(let netError):
+                case .failure(let netError):
                 
-                let finalError = getErrorForNetworkError(networkError: netError)
+                    let finalError = getErrorForNetworkError(networkError: netError)
 
-                DispatchQueue.main.async {
-                    onComplete(.failure(finalError))
-                }
+                    DispatchQueue.main.async {
+                        onComplete(.failure(finalError))
+                    }
             }
             
         }
