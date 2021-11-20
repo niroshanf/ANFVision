@@ -81,12 +81,12 @@ ANFVisionManager.scanText(image: imageToScan, confidence: 0.5, onComplete: { res
 
 `detectFace` method will let you find faces on a given photo.
 This method will allow to detect photos that have exact on face and will return error if more than one face detected or no face detected.
-It uses Google's Cloude Vision API so inorder it to work you should have a valid API key from google.
+It uses Google's Cloud Vision API so in-order it to work you should have a valid API key from google.
 
 Parameters::
 
 `image`: UIImage that needs to detect the faces  
-`apiKey`: Google Cloude Vision API key (https://cloud.google.com/)
+`apiKey`: Google Cloud Vision API key (https://cloud.google.com/)
 
 ```objective-c
 
