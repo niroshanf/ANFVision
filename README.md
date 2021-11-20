@@ -54,7 +54,7 @@ extension UIViewController: UIImagePickerControllerDelegate {
 
 To detect text for the supplied image you can use the method `scanText`.
 If the scan completed successsfully the noComplete will return success Result with array of all the detected text.
-If any error it will call the failure Result and you can handdle the error from your application. 
+If any error occured, it will call the failure Result and you can handdle the error from your application. 
 
 Parameters::
 
