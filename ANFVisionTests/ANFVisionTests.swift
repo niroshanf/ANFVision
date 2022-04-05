@@ -12,6 +12,8 @@ class ANFVisionTests: XCTestCase {
 
     var apiKey: String?
     
+    let imageBase64String: String = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAPzSURBVFiF7ZZdSJ11HMc/v+c5Hl9zvnFcTtZUdDjdVMZqa40RomOCYDak7OVi0UXMnEov9EJ4Ubhsy5RByOoiyC6sOczJCh1epNkWc2KgFRkGpmxNTx7FqfU8/y7m0fOcF8/xYkWw79V5fr/v7/f9/l/PH+7hP4b8KyoKoaX4eUxz72pkmNreDwFsd138bGEizVobqCOIAGoIU3/Nnb67M9BUlI/QAaStRq5jM4uoujzjpmib7dnhOpvYNdUaFVy8+CmEby3idnuhpziEMAOdzjMFKO0JpVGKIgOwr6bmFXyvob7UdLOtNPalW2tFzUUnUbzP+gCn0GwPUX1p0rt/QAPnnacf0NHfA46FYHQOpRqH412n65v7T4HUeuQWUByitmfYX6Hfxp2zTQfVnbVzBBFeg0LR0j8y1Tf+e4pH2ERUOSd7OwPV+ZyCjtnmR5SYvUB4qOIA566M4iUOSt6kpiegOHjNwPmZllRdM66xiZEDtF3/mc9HfvHu3E11TymC2qjWcgp0zXjHLe5cWub2X0ZQ8e4fJ3zEHTGRNB458EkwcYuBTtcHO4GnAWYWl3j90iA1Xd8wdtMZsHhgYpqPro5aYjZdePlwAVnJ8a8Gde9pwDRUhfv7VN8Q065Fbswv8sZX3/Hp0E8Ypmkp/HXWRUv/CMprjJV5WWQmxQHs7XCdyQrZgAhH3b8f352xRjCV4osfxqm7OMCE0wWAa2mFd/uGWDasS5TtiKcsN33tWzfkKEGwvgfuXDIA7N+eTHHWdgvxN+c8r3QP0jU2QUPfEDcWFi35qDAbtYfy0WR9X5tIGkGgAbSrdh1I8kw892A2qbHRFvKKYfDx1VHGbs76NDq+bxeOmEhrc8X9IRmokAoDuO2ZCNd16g4XEKYH/7vIS0miMHObT9wUFkIysIpp72R6QiyV+Rvvo3Bd54X9OYifS1XEt+dGBq74I5TlpJO7NTFgg8qCLLbeF+03JyaDIRsQEb9XpghUH9xDVJjv2yUzKY7SXTsC9V6InZu7HLKB5S1/dgLj/kiOmEiO78u2xHRN48TDuZZdbzGOtD6aVr8UsoEKqV9BqbcCEQszU8lLWT8oj+WksSM+NhDdaei2hmDiFgMAZQl1n6HUOX9EQThxYDcRNhuJUREc25PhjwZgmkqeLY+tmglE8ITPwtrjbS+uzP29DSUl3jlHTCRP5meSFB1BhM3ve9YQparKE2ovhiIOAR4k7apdtzsnGxCpA3TPnKmU33UX+ENp8kzZlpqvQxUPaMCNjtnmXBHzbYESICwA7RZCq93QG0sSq12bEQ9qwI0LzqY4TaQIxU4TMxlkRVCTgnZtOS5lYPUmvYf/J/4BhYs4cZnEULgAAAAASUVORK5CYII="
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
@@ -24,7 +26,7 @@ class ANFVisionTests: XCTestCase {
     
     func testUIImageFromBase64() throws {
         
-        let imageBase64String: String = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAPzSURBVFiF7ZZdSJ11HMc/v+c5Hl9zvnFcTtZUdDjdVMZqa40RomOCYDak7OVi0UXMnEov9EJ4Ubhsy5RByOoiyC6sOczJCh1epNkWc2KgFRkGpmxNTx7FqfU8/y7m0fOcF8/xYkWw79V5fr/v7/f9/l/PH+7hP4b8KyoKoaX4eUxz72pkmNreDwFsd138bGEizVobqCOIAGoIU3/Nnb67M9BUlI/QAaStRq5jM4uoujzjpmib7dnhOpvYNdUaFVy8+CmEby3idnuhpziEMAOdzjMFKO0JpVGKIgOwr6bmFXyvob7UdLOtNPalW2tFzUUnUbzP+gCn0GwPUX1p0rt/QAPnnacf0NHfA46FYHQOpRqH412n65v7T4HUeuQWUByitmfYX6Hfxp2zTQfVnbVzBBFeg0LR0j8y1Tf+e4pH2ERUOSd7OwPV+ZyCjtnmR5SYvUB4qOIA566M4iUOSt6kpiegOHjNwPmZllRdM66xiZEDtF3/mc9HfvHu3E11TymC2qjWcgp0zXjHLe5cWub2X0ZQ8e4fJ3zEHTGRNB458EkwcYuBTtcHO4GnAWYWl3j90iA1Xd8wdtMZsHhgYpqPro5aYjZdePlwAVnJ8a8Gde9pwDRUhfv7VN8Q065Fbswv8sZX3/Hp0E8Ypmkp/HXWRUv/CMprjJV5WWQmxQHs7XCdyQrZgAhH3b8f352xRjCV4osfxqm7OMCE0wWAa2mFd/uGWDasS5TtiKcsN33tWzfkKEGwvgfuXDIA7N+eTHHWdgvxN+c8r3QP0jU2QUPfEDcWFi35qDAbtYfy0WR9X5tIGkGgAbSrdh1I8kw892A2qbHRFvKKYfDx1VHGbs76NDq+bxeOmEhrc8X9IRmokAoDuO2ZCNd16g4XEKYH/7vIS0miMHObT9wUFkIysIpp72R6QiyV+Rvvo3Bd54X9OYifS1XEt+dGBq74I5TlpJO7NTFgg8qCLLbeF+03JyaDIRsQEb9XpghUH9xDVJjv2yUzKY7SXTsC9V6InZu7HLKB5S1/dgLj/kiOmEiO78u2xHRN48TDuZZdbzGOtD6aVr8UsoEKqV9BqbcCEQszU8lLWT8oj+WksSM+NhDdaei2hmDiFgMAZQl1n6HUOX9EQThxYDcRNhuJUREc25PhjwZgmkqeLY+tmglE8ITPwtrjbS+uzP29DSUl3jlHTCRP5meSFB1BhM3ve9YQparKE2ovhiIOAR4k7apdtzsnGxCpA3TPnKmU33UX+ENp8kzZlpqvQxUPaMCNjtnmXBHzbYESICwA7RZCq93QG0sSq12bEQ9qwI0LzqY4TaQIxU4TMxlkRVCTgnZtOS5lYPUmvYf/J/4BhYs4cZnEULgAAAAASUVORK5CYII="
+        
         
         let newImageData = Data(base64Encoded: imageBase64String)
         if let newImageData = newImageData {
@@ -38,8 +40,6 @@ class ANFVisionTests: XCTestCase {
     }
     
     func testImageWithoutText() throws {
-        
-        let imageBase64String: String = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAPzSURBVFiF7ZZdSJ11HMc/v+c5Hl9zvnFcTtZUdDjdVMZqa40RomOCYDak7OVi0UXMnEov9EJ4Ubhsy5RByOoiyC6sOczJCh1epNkWc2KgFRkGpmxNTx7FqfU8/y7m0fOcF8/xYkWw79V5fr/v7/f9/l/PH+7hP4b8KyoKoaX4eUxz72pkmNreDwFsd138bGEizVobqCOIAGoIU3/Nnb67M9BUlI/QAaStRq5jM4uoujzjpmib7dnhOpvYNdUaFVy8+CmEby3idnuhpziEMAOdzjMFKO0JpVGKIgOwr6bmFXyvob7UdLOtNPalW2tFzUUnUbzP+gCn0GwPUX1p0rt/QAPnnacf0NHfA46FYHQOpRqH412n65v7T4HUeuQWUByitmfYX6Hfxp2zTQfVnbVzBBFeg0LR0j8y1Tf+e4pH2ERUOSd7OwPV+ZyCjtnmR5SYvUB4qOIA566M4iUOSt6kpiegOHjNwPmZllRdM66xiZEDtF3/mc9HfvHu3E11TymC2qjWcgp0zXjHLe5cWub2X0ZQ8e4fJ3zEHTGRNB458EkwcYuBTtcHO4GnAWYWl3j90iA1Xd8wdtMZsHhgYpqPro5aYjZdePlwAVnJ8a8Gde9pwDRUhfv7VN8Q065Fbswv8sZX3/Hp0E8Ypmkp/HXWRUv/CMprjJV5WWQmxQHs7XCdyQrZgAhH3b8f352xRjCV4osfxqm7OMCE0wWAa2mFd/uGWDasS5TtiKcsN33tWzfkKEGwvgfuXDIA7N+eTHHWdgvxN+c8r3QP0jU2QUPfEDcWFi35qDAbtYfy0WR9X5tIGkGgAbSrdh1I8kw892A2qbHRFvKKYfDx1VHGbs76NDq+bxeOmEhrc8X9IRmokAoDuO2ZCNd16g4XEKYH/7vIS0miMHObT9wUFkIysIpp72R6QiyV+Rvvo3Bd54X9OYifS1XEt+dGBq74I5TlpJO7NTFgg8qCLLbeF+03JyaDIRsQEb9XpghUH9xDVJjv2yUzKY7SXTsC9V6InZu7HLKB5S1/dgLj/kiOmEiO78u2xHRN48TDuZZdbzGOtD6aVr8UsoEKqV9BqbcCEQszU8lLWT8oj+WksSM+NhDdaei2hmDiFgMAZQl1n6HUOX9EQThxYDcRNhuJUREc25PhjwZgmkqeLY+tmglE8ITPwtrjbS+uzP29DSUl3jlHTCRP5meSFB1BhM3ve9YQparKE2ovhiIOAR4k7apdtzsnGxCpA3TPnKmU33UX+ENp8kzZlpqvQxUPaMCNjtnmXBHzbYESICwA7RZCq93QG0sSq12bEQ9qwI0LzqY4TaQIxU4TMxlkRVCTgnZtOS5lYPUmvYf/J/4BhYs4cZnEULgAAAAASUVORK5CYII="
         
         let newImageData = Data(base64Encoded: imageBase64String)
         if let newImageData = newImageData, let img = UIImage(data: newImageData) {
@@ -91,8 +91,6 @@ class ANFVisionTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Test photo to check no face is available")
         var noFaceFound = true
         
-        let imageBase64String: String = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAPzSURBVFiF7ZZdSJ11HMc/v+c5Hl9zvnFcTtZUdDjdVMZqa40RomOCYDak7OVi0UXMnEov9EJ4Ubhsy5RByOoiyC6sOczJCh1epNkWc2KgFRkGpmxNTx7FqfU8/y7m0fOcF8/xYkWw79V5fr/v7/f9/l/PH+7hP4b8KyoKoaX4eUxz72pkmNreDwFsd138bGEizVobqCOIAGoIU3/Nnb67M9BUlI/QAaStRq5jM4uoujzjpmib7dnhOpvYNdUaFVy8+CmEby3idnuhpziEMAOdzjMFKO0JpVGKIgOwr6bmFXyvob7UdLOtNPalW2tFzUUnUbzP+gCn0GwPUX1p0rt/QAPnnacf0NHfA46FYHQOpRqH412n65v7T4HUeuQWUByitmfYX6Hfxp2zTQfVnbVzBBFeg0LR0j8y1Tf+e4pH2ERUOSd7OwPV+ZyCjtnmR5SYvUB4qOIA566M4iUOSt6kpiegOHjNwPmZllRdM66xiZEDtF3/mc9HfvHu3E11TymC2qjWcgp0zXjHLe5cWub2X0ZQ8e4fJ3zEHTGRNB458EkwcYuBTtcHO4GnAWYWl3j90iA1Xd8wdtMZsHhgYpqPro5aYjZdePlwAVnJ8a8Gde9pwDRUhfv7VN8Q065Fbswv8sZX3/Hp0E8Ypmkp/HXWRUv/CMprjJV5WWQmxQHs7XCdyQrZgAhH3b8f352xRjCV4osfxqm7OMCE0wWAa2mFd/uGWDasS5TtiKcsN33tWzfkKEGwvgfuXDIA7N+eTHHWdgvxN+c8r3QP0jU2QUPfEDcWFi35qDAbtYfy0WR9X5tIGkGgAbSrdh1I8kw892A2qbHRFvKKYfDx1VHGbs76NDq+bxeOmEhrc8X9IRmokAoDuO2ZCNd16g4XEKYH/7vIS0miMHObT9wUFkIysIpp72R6QiyV+Rvvo3Bd54X9OYifS1XEt+dGBq74I5TlpJO7NTFgg8qCLLbeF+03JyaDIRsQEb9XpghUH9xDVJjv2yUzKY7SXTsC9V6InZu7HLKB5S1/dgLj/kiOmEiO78u2xHRN48TDuZZdbzGOtD6aVr8UsoEKqV9BqbcCEQszU8lLWT8oj+WksSM+NhDdaei2hmDiFgMAZQl1n6HUOX9EQThxYDcRNhuJUREc25PhjwZgmkqeLY+tmglE8ITPwtrjbS+uzP29DSUl3jlHTCRP5meSFB1BhM3ve9YQparKE2ovhiIOAR4k7apdtzsnGxCpA3TPnKmU33UX+ENp8kzZlpqvQxUPaMCNjtnmXBHzbYESICwA7RZCq93QG0sSq12bEQ9qwI0LzqY4TaQIxU4TMxlkRVCTgnZtOS5lYPUmvYf/J/4BhYs4cZnEULgAAAAASUVORK5CYII="
-        
         let newImageData = Data(base64Encoded: imageBase64String)
         if let newImageData = newImageData, let img = UIImage(data: newImageData) {
             
@@ -100,8 +98,8 @@ class ANFVisionTests: XCTestCase {
                 
                 switch result {
                     
-                    case .failure:
-                        XCTFail()
+                    case .failure(let error):
+                        XCTFail(error.localizedDescription)
                     
                     case .success(let response):
  
@@ -143,8 +141,8 @@ class ANFVisionTests: XCTestCase {
                 
                 switch result {
                     
-                    case .failure:
-                        XCTFail()
+                    case .failure(let error):
+                        XCTFail(error.localizedDescription)
                     
                     case .success(let response):
  
@@ -186,8 +184,8 @@ class ANFVisionTests: XCTestCase {
                 
                 switch result {
                     
-                    case .failure:
-                        XCTFail()
+                    case .failure(let error):
+                        XCTFail(error.localizedDescription)
                     
                     case .success(let response):
  
