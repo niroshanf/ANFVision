@@ -25,9 +25,7 @@ class ANFVisionTests: XCTestCase {
     }
     
     func testUIImageFromBase64() throws {
-        
-        
-        
+
         let newImageData = Data(base64Encoded: imageBase64String)
         if let newImageData = newImageData {
             
@@ -114,7 +112,7 @@ class ANFVisionTests: XCTestCase {
             })
         }
         else {
-            XCTFail()
+            XCTFail("Cannot create UIImage from data")
         }
         
         wait(for: [expectation], timeout: 30.0)
